@@ -1,0 +1,646 @@
+/*
+ * =================================================================
+ * [1. FONT & ROOT VARIABLES]
+ * =================================================================
+ */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+  /* Warna utama (Neon Cyberpunk) */
+  --primary: #38ddf8;    /* Biru Neon (Active/Accent) */
+  --secondary: #ff00ff;  /* Magenta Neon (Glow/Secondary) */
+  --dark: #07070a;       /* Latar Belakang Sangat Gelap */
+  --medium-dark: #12121c;/* Latar Belakang Medium */
+  --light: #f1f1f1;      /* Teks Utama */
+  --bg-gradient: radial-gradient(circle at top, #111 0%, #07070a 100%);
+  
+  /* Efek Cahaya (Glow) */
+  --neon-glow-primary: 0 0 10px var(--primary), 0 0 30px rgba(56,221,248,0.7);
+  --neon-glow-secondary: 0 0 10px var(--secondary), 0 0 30px rgba(255,0,255,0.7);
+  --text-glow: 0 0 5px rgba(255, 255, 255, 0.5);
+  --box-shadow-edge: 0 0 0 2px var(--primary), 0 0 15px rgba(56,221,248,0.4);
+  
+  /* Transisi */
+  --transition-smooth: 0.5s cubic-bezier(0.65, 0.05, 0.36, 1); /* Lebih smooth */
+}
+
+/*
+ * =================================================================
+ * [2. GLOBAL STYLING & CORE LAYOUT]
+ * =================================================================
+ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--light);
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.8;
+}
+
+/* Penambahan Spasi Lebih Banyak */
+section {
+  min-height: 100vh;
+  padding: 120px 80px; /* Spasi yang sangat banyak */
+  margin: 0 auto;
+  max-width: 1400px; /* Konten tidak terlalu lebar di layar besar */
+}
+
+/* Headers dan Separator */
+h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    margin-bottom: 60px;
+    color: var(--primary);
+    text-shadow: var(--neon-glow-primary);
+    position: relative;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+h2 span {
+    color: var(--secondary);
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 150px; /* Lebih panjang */
+    height: 4px; /* Lebih tebal */
+    background: linear-gradient(90deg, var(--secondary), transparent);
+    margin: 20px 0 0;
+    box-shadow: var(--neon-glow-secondary);
+}
+
+p {
+    max-width: 900px;
+    margin: 25px auto; /* Spasi lebih banyak */
+    font-size: 1.15rem;
+    color: #ccc;
+}
+
+/* Parallax Ringan pada Section */
+section {
+    background-color: var(--medium-dark);
+    border-bottom: 1px solid rgba(56,221,248,0.1);
+    /* Efek Parallax Ringan */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/*
+ * =================================================================
+ * [3. INTRO SCREEN (SPLASH SCREEN)] - SANGAT EPIK
+ * =================================================================
+ */
+.intro-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 1.5s ease-out; /* Transisi penutup */
+}
+/* Kelas yang ditambahkan JS saat siap ditutup */
+.intro-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-logo-container {
+    text-align: center;
+    animation: fadePulse 4s infinite alternate;
+}
+
+.intro-logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(56,221,248,0.9), 0 0 40px rgba(56,221,248,0.7), 0 0 80px rgba(56,221,248,0.4);
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    transform: rotateX(10deg); /* Efek 3D */
+    transition: transform 0.5s;
+}
+
+.intro-tagline {
+    font-size: 1.5rem;
+    color: var(--secondary);
+    text-shadow: var(--neon-glow-secondary);
+    animation: typing 3s steps(30) 1s forwards, blink-caret 0.75s step-end infinite;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    border-right: .15em solid var(--secondary);
+    margin: 40px auto 15px;
+}
+
+.loading-bar {
+    width: 300px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin: 20px auto;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+.loading-progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    box-shadow: var(--neon-glow-primary);
+    animation: loadingAnim 3s ease-in-out forwards;
+}
+
+.tap-start {
+    font-size: 1rem;
+    color: #999;
+    margin-top: 50px;
+    opacity: 0;
+    animation: fadeIn 1s 4s forwards;
+}
+
+@keyframes fadePulse {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+@keyframes loadingAnim {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/*
+ * =================================================================
+ * [4. SIDEBAR NAVIGATION (MENU)] - MINIMALIS
+ * =================================================================
+ */
+
+/* Tombol Toggle Menu (Hanya Ikon) */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: fixed;
+  top: 35px;
+  left: 35px;
+  z-index: 1100;
+  background: rgba(10,10,15,0.8);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--primary);
+  transition: var(--transition-smooth);
+}
+.menu-toggle:hover {
+    border-color: var(--secondary);
+    box-shadow: 0 0 10px var(--secondary);
+}
+
+.icon-line {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 2px;
+    transition: transform 0.4s, background 0.4s, opacity 0.4s;
+}
+
+/* Animasi Close (X) */
+#sidebar.active ~ .menu-toggle .icon-line:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+    background: var(--secondary);
+}
+#sidebar.active ~ .menu-toggle .icon-line:nth-child(2) {
+    opacity: 0;
+}
+#sidebar.active ~ .menu-toggle .icon-line:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+    background: var(--secondary);
+}
+
+/* --- ANIMASI MENU STAGGERED & STRUKTUR AKTIF --- */
+
+.sidebar-inner { 
+    padding: 60px 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sidebar .logo {
+    margin-bottom: 80px; 
+    padding: 0 40px;
+    width: 100%;
+    text-align: center;
+    animation: neonFlicker 2s infinite alternate; /* Animasi Flicker pada Logo */
+}
+
+#sidebar nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 40px;
+  gap: 25px; 
+  margin-bottom: 80px;
+}
+
+#sidebar nav a {
+  /* ... (gaya sebelumnya) ... */
+  width: 100%;
+  text-align: left; /* Rata kiri */
+  
+  /* Status Awal Animasi Staggered: Tersembunyi */
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Animasi Staggered (Berurutan) saat Menu Aktif */
+#sidebar.active .nav-item:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.1s; }
+#sidebar.active .nav-item:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.2s; }
+#sidebar.active .nav-item:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.3s; }
+#sidebar.active .nav-item:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.4s; }
+#sidebar.active .nav-item:nth-child(5) { opacity: 1; transform: translateX(0); transition-delay: 0.5s; }
+
+/* Garis Dekoratif */
+.decor-line {
+    width: 80%; 
+    height: 8px;
+    background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+    box-shadow: var(--neon-glow-secondary);
+    opacity: 0;
+    transition: opacity 0.5s ease-out 0.2s;
+}
+
+#sidebar.active .decor-line {
+    opacity: 1;
+    animation: neonFlicker 3s infinite alternate; 
+}
+
+.sidebar-footer {
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: auto; 
+    animation: pulseColor 5s infinite alternate;
+}
+
+/* Keyframe untuk Flicker Logo dan Garis */
+@keyframes neonFlicker {
+  0%, 100% { text-shadow: var(--neon-glow-primary); filter: brightness(1); opacity: 1; }
+  50% { text-shadow: none; filter: brightness(0.8); opacity: 0.95; }
+}
+
+/* Sidebar Styling - Efek Blur lebih Kuat & Transisi Terseret */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -320px; /* <--- PASTIKAN INI ADA! Ini yang menyembunyikan menu. */
+  height: 100%;
+  width: 320px;
+  background: rgba(10, 10, 15, 0.98);
+  backdrop-filter: blur(18px) brightness(0.6);
+  border-right: 4px solid rgba(56,221,248,0.5);
+  padding: 60px 40px;
+  
+  /* Tambahkan Z-INDEX TINGGI */
+  z-index: 1050; 
+  
+  /* Transformasi untuk efek 3D (Pastikan transisi mencakup transform) */
+  transform: translateX(0) rotateY(15deg) scaleX(0.95);
+  transform-origin: left;
+  transition: left var(--transition-smooth), transform var(--transition-smooth);
+}
+
+/* Sidebar Aktif (Muncul) - Perubahan Transform */
+#sidebar.active {
+  left: 0;
+  box-shadow: 10px 0 40px rgba(56,221,248,0.7);
+  /* Transform direset saat aktif (terseret ke depan) */
+  transform: translateX(0) rotateY(0deg) scaleX(1);
+}
+
+/* MAIN CONTENT - BLUR MAKSIMAL DENGAN SKALA */
+.main-content {
+  padding: 0; 
+  /* Tambahkan transisi filter untuk blur */
+  transition: filter var(--transition-smooth), transform var(--transition-smooth);
+}
+
+/* Saat sidebar aktif, blur, sedikit gelap, dan dorong konten menjauh (Parallax 3D) */
+#sidebar.active ~ .main-content {
+  filter: blur(8px) brightness(0.5); /* Blur lebih dramatis */
+  pointer-events: none; 
+  /* Parallax: dorong ke kanan dan skala/perspektif */
+  transform: translateX(50px) perspective(800px) scale(0.96) rotateY(-1deg); 
+}
+
+
+/*
+ * =================================================================
+ * [5. BUTTONS (BTN) & FORM ELEMENTS] - EFEK GLOW GANDA
+ * =================================================================
+ */
+.btn {
+  /* Gaya Dasar */
+  border: 2px solid var(--primary);
+  padding: 16px 35px; /* Lebih besar */
+  border-radius: 8px; /* Lebih kotak (Edge) */
+  margin: 25px 20px;
+  box-shadow: var(--neon-glow-primary);
+  transition: all var(--transition-smooth);
+  transform: perspective(1000px) rotateX(0deg);
+}
+
+/* Tombol Primary Glow */
+.btn-primary-glow {
+    background: rgba(56,221,248, 0.15);
+    color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: var(--neon-glow-primary);
+}
+.btn-primary-glow:hover {
+    background: var(--primary);
+    color: var(--dark);
+    box-shadow: 0 0 50px var(--primary), 0 0 80px rgba(56,221,248,0.8);
+    transform: translateY(-5px) scale(1.05) rotateX(5deg);
+}
+
+/* Tombol Secondary Glow */
+.btn-secondary-glow {
+    background: rgba(255,0,255, 0.15);
+    color: var(--secondary);
+    border-color: var(--secondary);
+    box-shadow: var(--neon-glow-secondary);
+}
+.btn-secondary-glow:hover {
+    background: var(--secondary);
+    color: var(--dark);
+    box-shadow: 0 0 50px var(--secondary), 0 0 80px rgba(255,0,255,0.8);
+    transform: translateY(-5px) scale(1.05) rotateX(5deg);
+}
+
+/*
+ * =================================================================
+ * [6. SECTION STYLING (DEMO, ABOUT, TEAM, FUN)]
+ * =================================================================
+ */
+
+/* DEMO Section */
+.demo {
+    text-align: center;
+}
+.demo video {
+  max-width: 900px;
+  border: 6px solid var(--primary); /* Edge lebih tebal */
+  box-shadow: 0 0 60px rgba(56,221,248,0.8);
+  animation: floatVid 8s ease-in-out infinite, glowingBorder 4s infinite alternate;
+}
+
+.output-container {
+    padding: 30px 0;
+    border-top: 1px dashed var(--secondary);
+    border-bottom: 1px dashed var(--secondary);
+    margin: 40px auto;
+    max-width: 800px;
+}
+
+.neon-output {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--secondary);
+    text-shadow: var(--neon-glow-secondary);
+    margin: 10px auto;
+}
+
+/* ABOUT Section (Feature List) */
+.feature-list {
+    list-style: none;
+    max-width: 900px;
+    margin: 40px auto;
+    padding-left: 0;
+}
+.feature-list li {
+    font-size: 1.2rem;
+    margin: 20px 0;
+    position: relative;
+    padding-left: 30px;
+    color: var(--light);
+}
+.feature-list li::before {
+    content: '>>';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    text-shadow: var(--neon-glow-primary);
+    animation: slideInLeft 1s ease-out;
+}
+.about-conclusion {
+    margin-top: 50px;
+    border-top: 2px solid var(--primary);
+    padding-top: 30px;
+    font-style: italic;
+    color: var(--secondary);
+}
+
+
+
+/* -------------------------------------
+   [TEAM SECTION - DETAIL & 3D HOVER]
+   ------------------------------------- */
+
+.member {
+  padding: 50px 30px;
+  width: 350px;
+  /* Atur efek 3D default (Perspektif) */
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Container untuk detail yang muncul */
+.member-details {
+    position: absolute;
+    bottom: -100%; /* Sembunyikan di bawah */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+    transition: bottom var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Keterangan: Detail yang terpisah (Sekolah & Jabatan) */
+.member-details p {
+    font-size: 1rem;
+    color: var(--primary);
+    margin: 10px 0;
+    text-shadow: var(--text-glow);
+}
+
+/* Efek 3D/Edge saat Hover */
+.member:hover {
+    box-shadow: 0 0 50px var(--secondary), 0 0 20px var(--primary);
+    border-color: var(--primary);
+    /* Rotasi 3D saat hover */
+    transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1.05);
+}
+
+/* Tampilkan Detail saat Hover */
+.member:hover .member-details {
+    bottom: 0; /* Tarik ke atas */
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sembunyikan informasi asli saat detail muncul */
+.member:hover .scrolling-h3, .member:hover .role-original {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Styling untuk Detail yang muncul */
+.detail-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: var(--secondary);
+    text-shadow: var(--neon-glow-secondary);
+    margin-bottom: 20px;
+}
+
+@keyframes marquee-h {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.member p.role {
+    font-style: italic;
+    color: var(--secondary);
+    margin-top: 10px;
+}
+
+/* FUN Section */
+.neon-motivation {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-shadow: var(--neon-glow-secondary);
+  animation: pulseColor 4s infinite alternate; /* Animasi warna neon */
+}
+@keyframes pulseColor {
+    0% { color: var(--secondary); text-shadow: var(--neon-glow-secondary); }
+    100% { color: var(--primary); text-shadow: var(--neon-glow-primary); }
+}
+
+/*
+ * =================================================================
+ * [7. ANIMATION KEYFRAMES] - UPDATE
+ * =================================================================
+ */
+/* Reveal on Scroll (Lebih smooth dan 3D) */
+.reveal {
+  opacity: 0;
+  transform: translateY(120px) scale(0.9) rotateX(15deg); /* Efek 3D lebih dramatis */
+  transition: all 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotateX(0deg);
+}
+
+/* Keyframe lain */
+@keyframes glowingBorder {
+  0% { border-color: var(--primary); box-shadow: 0 0 50px rgba(56,221,248,0.8); }
+  50% { border-color: var(--secondary); box-shadow: 0 0 70px rgba(255,0,255,0.8); }
+  100% { border-color: var(--primary); box-shadow: 0 0 50px rgba(56,221,248,0.8); }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/*
+ * =================================================================
+ * [8. RESPONSIVE DESIGN]
+ * =================================================================
+ */
+@media (max-width: 1024px) {
+    section {
+        padding: 100px 30px;
+    }
+    h2 {
+        font-size: 2.5rem;
+    }
+    .intro-logo-text {
+        font-size: 3rem;
+    }
+    .intro-tagline {
+        font-size: 1rem;
+    }
+    .member {
+        width: 45%;
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        top: 20px;
+        left: 20px;
+    }
+    #sidebar {
+        width: 250px;
+    }
+    .hero h2 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .team-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    .member {
+        width: 90%;
+    }
+    .scrolling-h3 {
+        /* Menonaktifkan marquee di mobile (nama panjang bisa aneh) */
+        overflow: visible;
+        white-space: normal;
+        animation: none !important;
+    }
+}

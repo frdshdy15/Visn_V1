@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visn_V1 | AI Vision</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="introScreen" class="intro-screen">
+    <div class="intro-logo-container">
+        <h1 class="intro-logo-text">V i s n _ V 1</h1>
+        <p class="intro-tagline">Initializing AI...</p>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+        <p class="tap-start">Klik atau sentuh layar untuk memulai</p>
+    </div>
+</div>
+<div class="menu-toggle" id="menuToggle">
+    <span class="icon-line"></span>
+    <span class="icon-line"></span>
+    <span class="icon-line"></span>
+</div>
+
+<header id="sidebar">
+  <div class="sidebar-inner"> 
+    <h1 class="logo">Visn_v1</h1>
+    
+    <div class="decor-line top-line"></div> 
+
+    <nav>
+      <a href="#home" class="nav-link nav-item" data-text="Beranda">Beranda</a>
+      <a href="#demo" class="nav-link nav-item" data-text="Demo Deteksi">Demo Deteksi</a>
+      <a href="#about" class="nav-link nav-item" data-text="Tentang Project">Tentang Project</a>
+      <a href="#team" class="nav-link nav-item" data-text="Tim Inti">Tim </a>
+      <a href="#fun" class="nav-link nav-item" data-text="Hiburan & Inspirasi">Hiburan & Inspirasi</a>
+    </nav>
+    
+    <div class="decor-line bottom-line"></div> 
+    
+    <p class="sidebar-footer">Tokobangunan</p>
+  </div>
+</header>
+
+<div class="main-content">
+
+    <section id="home" class="hero reveal">
+      <canvas id="hero-canvas"></canvas> <div class="hero-text">
+        <br><br><br>
+        <h2>Inovasi ai untuk <span>tunanetra</span></h2>
+        <p>Visn_v1 lahir dari keresahan sederhana: bagaimana caranya agar teknologi benar-benar bisa dirasakan manfaatnya oleh orang-orang yang sering terabaikan, salah satunya teman-teman tunanetra.</p>
+        <a href="#demo" class="btn btn-primary-glow">Mulai Deteksi Sekarang</a>
+      </div>
+    </section>
+
+    <section id="demo" class="demo reveal">
+      <h2>Demo Langsung <br> Real-Time Visn_v1</h2>
+      <p>Arahkan kamera perangkat Anda ke objek di sekitar. Sistem akan mendeteksi objek, memperkirakan jaraknya, dan membacakan hasilnya secara real-time dan akurat.</p>
+      <video id="video" autoplay playsinline muted></video>
+      <div class="output-container">
+        <p id="output" class="neon-output">Menunggu Model AI dimuat...</p>
+        <p id="distance" class="neon-output"></p>
+      </div>
+      
+      <div class="camera-controls">
+          <button id="toggleCamera" class="btn btn-secondary-glow">Nyalakan Kamera</button>
+          <button id="switchCamera" class="btn btn-secondary-glow">Kamera Belakang</button>
+      </div>
+    </section>
+
+    <section id="about" class="about reveal">
+      <h2>Tentang Project </h2>
+      <p>Kami memanfaatkan kamera perangkat yang terhubung dengan model deteksi objek berbasis *COCO-SSD* yang dioperasikan oleh *TensorFlow.js*. Mekanismenya adalah sebuah siklus cepat:</p>
+      <ul class="feature-list">
+          <li>Input Visual: Kamera menangkap gambar secara real-time.</li>
+          <li>Deteksi ML: Sistem mendeteksi objek di sekitar dengan memanfaatkan machine learning (COCO-SSD).</li>
+          <li>Estimasi Jarak: Jarak diperkirakan melalui algoritma estimasi tinggi bounding box sederhana, diubah ke satuan *METER*.</li>
+          <li>Feedback Audio: Hasilnya disampaikan kembali dalam bentuk suara (Speech Synthesis Bahasa Indonesia), sehingga pengguna tidak perlu melihat layar.</li>
+      </ul>
+      <p class="about-conclusion">Dengan ini, seorang tunanetra bisa tahu objek didepan, lengkap dengan informasi jarak.</p>
+    </section>
+
+    <section id="team" class="team reveal">
+      <h2>Tim</h2>
+      <div class="team-container">
+        <div class="member member-1">
+          <h3 class="scrolling-h3">Firdaus Hidayatullah</h3>
+          <p class="role-original">SMA Negeri 1 Cirebon</p>
+          <p class="role-original">Lead Developer & AI Integrator</p>
+          
+          <div class="member-details">
+            <p class="detail-title">-- DATA AKSELERASI --</p>
+            <p><strong>Institusi:</strong> SMA Negeri 1 Cirebon</p>
+            <p><strong>Jabatan Utama:</strong> Lead Developer, AI Integrator, UX/UI Designer & Front-End</p>
+            <p>Instagram: @frdshdy_15</p>
+          </div>
+        </div>
+
+        <div class="member member-2">
+          <h3 class="scrolling-h3">Mohammad Fahry Pashya Bahtiar</h3>
+          <p class="role-original">SMA Negeri 1 Cirebon</p>
+          <p class="role-original">bot</p>
+          
+          <div class="member-details">
+            <p class="detail-title">-- DATA AKSELERASI --</p>
+            <p><strong>Institusi:</strong> SMA Negeri 1 Cirebon</p>
+            <p><strong>Jabatan Utama:</strong> bot</p>
+            <p>Instagram: @ikanparii__</p>
+          </div>
+        </div>
+      </div>
+      <p class="team-quote">"Lebih dari sekadar teknis, ada pesan yang ingin kami sampaikan lewat Visn_v1: Bahwa teknologi bukan hanya tentang seberapa canggih kita bisa membuat kode, tapi tentang seberapa besar ia mampu menjembatani keterbatasan manusia. <br><br>
+      Harapan kami sederhana: Semoga karya kecil ini bisa membantu mereka yang membutuhkan."</p>
+    </section>
+
+    <section id="fun" class="fun reveal">
+      <h2>Hiburan & Inspirasi <br> Recharge Protocol</h2>
+      <p>Klik tombol untuk mendapatkan yapping acak hari ini.</p>
+      <button onclick="showMotivation()" class="btn btn-primary-glow">yapping Hari Ini</button>
+      <p id="motivation" class="neon-motivation">Klik tombol di atas untuk melihat yappingan inspiratif!</p>
+    </section>
+
+    <footer>
+      <p>© 2025 Tokobangunan | Project Visn_v1</p>
+      <p>SMA Negeri 1 Cirebon</p>
+      <p>Build v2.1: capek fahry nya ngebot</p>
+    </footer>
+
+</div> <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+<script src="script.js"></script>
+</body>
+</html>
