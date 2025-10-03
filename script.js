@@ -270,17 +270,17 @@ async function detectLoop() {
 
       // Estimasi Jarak (Algoritma sederhana)
       const tinggi = obj.bbox[3] || 0;
-      let jarakCm = tinggi > 0 ? Math.round(500 / tinggi) : 0;
+      let jarakCm = tinggi > 0 ? Math.round(490 / tinggi) : 0;
       if (jarakCm <= 0) jarakCm = 1;
 
       // Update Teks
       if (output) output.innerText = "👁‍ Terdeteksi: " + namaObj + " (" + persen + "%)";
-      if (distanceEl) distanceEl.innerText = "📡 Perkiraan jarak: " + jarakCm + " M";
+      if (distanceEl) distanceEl.innerText = "📡 Perkiraan jarak: " + jarakCm + " LANGKAH";
 
       // Bicara
       if (obj.score > 0.5) {
         const jarakText = angkaKeTeks(Math.min(jarakCm, 999));
-        const teks = "Ada " + namaObj + " di depan, jaraknya sekitar " + jarakText + " meter";
+        const teks = "Ada " + namaObj + " di depan, jaraknya sekitar " + jarakText + " langkah";
         speakQueued(teks);
       }
     } else {
